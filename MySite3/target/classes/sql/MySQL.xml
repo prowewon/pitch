@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="my">
+<select id="mypage" parameterType="String" resultType="hashmap">
+SELECT MEM_NAME, MEM_EMAIL, MEM_PW
+FROM MEMBER
+WHERE MEM_ID = #{mem_id}
+</select>
+<select id="board" parameterType="String" resultType="hashmap">
+SELECT *
+FROM BOARD
+WHERE MEM_NO = (SELECT MEM_NO FROM MEMBER WHERE MEM_ID = #{mem_id}) AND DEL_YN = 'N'
+</select>
+<select id="comment" parameterType="String" resultType="hashmap">
+SELECT COM_NO, REPLACE(COM_INDEX, #{br}, ' ') AS COM_INDEX, REC_NO
+FROM COMMENTS
+WHERE MEM_NO = (SELECT MEM_NO FROM MEMBER WHERE MEM_ID = #{mem_id}) AND DEL_YN = 'N'
+</select>
+<select id="select_name" parameterType="mBean" resultType="hashmap">
+SELECT COUNT(*) AS CNT
+FROM MEMBER
+WHERE MEM_NAME = #{mem_name}
+</select>
+<update id="up_name" parameterType="mBean">
+UPDATE MEMBER SET MEM_NAME = #{mem_name} WHERE MEM_ID = #{mem_id}
+</update>
+<update id="up_email" parameterType="mBean">
+UPDATE MEMBER SET MEM_EMAIL = #{mem_email} WHERE MEM_ID = #{mem_id}
+</update>
+<update id="up_pw" parameterType="mBean">
+UPDATE MEMBER SET MEM_PW = #{mem_pw} WHERE MEM_ID = #{mem_id}
+</update>
+</mapper>

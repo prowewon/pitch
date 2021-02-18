@@ -1,0 +1,234 @@
+html, body { width: 100%; margin: 0; padding: 0; background-color: #ffffff; min-width: 1200px; height: 100%;}
+header { width: 100%; text-align: center; }
+a {text-decoration: none; color: black;}
+button {cursor: pointer;}
+header h1 { width: 200px; margin: 0 auto; padding-top: 8px; }
+.menu {
+    width: 900px;
+    height: 50px;
+    background-color: #ffdddd;
+    left: 50%;
+    margin: 0 auto;
+}
+.menu ul {
+    padding: 10px 0 0 0;
+    list-style: none;
+}
+.menu ul li {
+    margin-top: 5px;
+    float: left;
+    width: 20%;
+    height: 30px;
+    font-weight: bold;
+}
+.menu ul li a {
+    display: block;
+
+}
+.menu ul li a:hover {
+    cursor: pointer;
+    color: #bebebe;
+}
+.inform {
+    width: 1100px;
+    left: 50%;
+    margin: 20px auto 0 auto;
+}
+ul {
+    list-style: none;
+    padding: 0;
+}
+.record {
+    width: 800px;
+    height: 200px;
+    left: 50%;
+    margin: 0 auto;
+    border: 1px solid #bebebe;
+}
+.record li {
+    float: left;
+}
+.img {
+    float: left;
+    width: 200px;
+    height: 200px;
+    border-right: 1px solid #bebebe;
+}
+.img img {
+    width: 200px;
+    height: 200px;
+}
+.index {
+    float: right;
+    width: 200px;
+    height: 200px;
+    border-right: 1px solid #bebebe;
+}
+.index ul {
+    height: 200px;
+    text-align: center;
+}
+.index ul li {
+    margin-top: 25px;
+    width: 200px;
+    height: 30px;
+    font-weight: 500;
+    font-size: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: center;
+}
+.cnt {
+    float: right;
+    width: 200px;
+    height: 200px;
+    border-right: 1px solid #bebebe;
+}
+.cnt img {
+    width: 80px;
+    height: 80px;
+    margin: 58px;
+}
+.cnt_num {
+    width: 197px;
+    height: 200px;
+}
+.cnt_num p {
+    padding-top: 10px;
+    text-align: center;
+    font-size: 50px;
+    font-weight: bold;
+}
+.track {
+    width: 1200px;
+    left: 50%;
+    margin: 10px auto 0 auto;
+}
+.track li {
+    float: left;
+    width: 250px;
+    height: 50px;
+    border-radius: 3px;
+    margin: 10px 15px 0 15px;
+    border: 1px solid #bebebe;
+    text-align: left;
+}
+.track li a {
+    display: block;
+    font-size: 20px;
+    height: 30px;
+    margin: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.track li a:hover {
+	cursor: pointer;
+    opacity: 0.5;
+}
+.comment_wrap {
+    position: relative;
+    width: 100%;
+    top: 30px;
+    clear: both;
+}
+.comment {
+    left: 50%;
+    margin: 0 auto;
+    width: 1000px;
+    clear: both;
+    border: 1px solid #bebebe;
+}
+.comment_input {
+    left: 50%;
+    margin: 20px auto 0 auto;
+    width: 900px;
+    height: 80px;
+    border-radius: 3px;
+}
+.comment_input textarea {
+    width: 585px;
+    height: 78px;
+    border: 1px solid #bebebe;
+    border-radius: 3px;
+    margin: 0;
+    padding: 0;
+    resize: none;
+}
+
+.comment_input button {
+    float: right;
+    width: 150px;
+    height: 80px;
+    margin: 0 5px 0 0;
+    padding: 0;
+    border: 0;
+    border-radius: 3px;text-align: center;
+    font-size: 15px;
+}
+
+.comment_list {
+    width: 800px;
+    left: 50%;
+    margin: 20px auto 0 auto;
+}
+
+.comment_list li {
+    width: 800px;
+    height: 120px;
+    border: 1px solid #bebebe;
+    margin-top: 5px;
+}
+
+.comment_list .user_inform {
+    height: 25px;
+    border-bottom: 1px solid #bebebe;
+}
+
+.comment_list .user_inform p {
+    margin: 1px 5px 0 5px;
+}
+
+.comment_list .user_inform .COM_Y{
+    color: dodgerblue;
+}
+.comment_list .user_inform .COM_N{
+    color: crimson;
+}
+
+.comment_list .user_inform a {
+    float: right;
+    cursor: pointer;
+    margin: 2px 5px 0 0;
+}
+
+.comment_list .user_inform a:hover {
+    border-bottom: 1px solid #444;
+}
+.comment .page_area {
+    margin-top: 10px;
+    width: 1000px;
+    height: 30px;
+    text-align: center;
+}
+
+.comment .page_area .page_num {
+    margin: 0 auto;
+}
+
+.comment .page_area .page_num td {
+	cursor: pointer;
+}
+
+footer {
+    margin-top: 50px;
+    width: 100%;
+    height: 50px;
+    bottom: 0;
+}
+
+/* 수정 댓글 박스 */
+#mocom_box {
+    display: none;
+}

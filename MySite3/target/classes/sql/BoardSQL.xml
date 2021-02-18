@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+<select id="select" resultType="hashmap">
+SELECT A.BOARD_NO, BM.MENU_NO, A.BOARD_TITLE, DATE_FORMAT(A.BOARD_DATE, '%Y. %m. %d') AS BOARD_DATE, M.MEM_NAME, BM.MENU_NAME
+FROM (SELECT B.BOARD_NO, B.MENU_NO, B.BOARD_TITLE, B.BOARD_DATE, B.MEM_NO, @ROWNUM := @ROWNUM+1 AS RNUM
+		FROM BOARD B, (SELECT @ROWNUM := 0) R
+		WHERE DEL_YN ='N'
+		ORDER BY BOARD_NO DESC) A INNER JOIN BOARD_MENU BM
+													 ON A.MENU_NO = BM.MENU_NO
+										  INNER JOIN MEMBER M
+										  			 ON A.MEM_NO = M.MEM_NO
+WHERE A.RNUM BETWEEN 1 AND 10
+ORDER BY A.RNUM ASC
+</select>
+<select id="pagecnt" resultType="hashmap">
+SELECT CEIL(COUNT(*)/10) AS PAGECNT
+FROM  BOARD
+WHERE DEL_YN = 'N'
+</select>
+<select id="page" parameterType="int" resultType="hashmap">
+SELECT A.BOARD_NO, BM.MENU_NO, A.BOARD_TITLE, DATE_FORMAT(A.BOARD_DATE, '%Y. %m. %d') AS BOARD_DATE, M.MEM_NAME, BM.MENU_NAME
+FROM (SELECT B.BOARD_NO, B.MENU_NO, B.BOARD_TITLE, B.BOARD_DATE, B.MEM_NO, @ROWNUM := @ROWNUM+1 AS RNUM
+		FROM BOARD B, (SELECT @ROWNUM := 0) R
+		WHERE DEL_YN ='N'
+		ORDER BY BOARD_NO DESC) A INNER JOIN BOARD_MENU BM
+													 ON A.MENU_NO = BM.MENU_NO
+										  INNER JOIN MEMBER M
+										  			 ON A.MEM_NO = M.MEM_NO
+WHERE A.RNUM BETWEEN (10*#{pagenum}) - 9 AND 10*#{pagenum}
+ORDER BY A.RNUM ASC
+</select>
+<insert id="board_insert" parameterType="hashmap">
+INSERT INTO BOARD (BOARD_TITLE, BOARD_INDEX, MEM_NO, MENU_NO) 
+VALUES (#{board_title}, #{board_index}, (SELECT MEM_NO FROM MEMBER WHERE MEM_ID = #{mem_id}), #{menu_no})
+</insert>
+<select id="board_detail" parameterType="int" resultType="hashmap">
+SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_INDEX,DATE_FORMAT(B.BOARD_DATE, '%Y. %m. %d') AS BOARD_DATE, M.MEM_NAME, M.MEM_ID
+FROM BOARD B INNER JOIN MEMBER M
+					 ON B.MEM_NO = M.MEM_NO
+WHERE BOARD_NO = #{board_no}
+</select>
+<update id="upBoard" parameterType="bBean">
+UPDATE BOARD SET MENU_NO = #{menuNo}, BOARD_TITLE = #{boardTitle}, BOARD_INDEX = #{boardIndex} WHERE BOARD_NO = #{boardNo}
+</update>
+<update id="delBoard" parameterType="hashmap">
+UPDATE BOARD SET DEL_YN = 'Y' WHERE BOARD_NO = #{boardNo}
+</update>
+<select id="searchTitle" parameterType="hashmap" resultType="hashmap">
+SELECT B.BOARD_NO, BM.MENU_NO, B.BOARD_TITLE, DATE_FORMAT(B.BOARD_DATE, '%Y. %m. %d') AS BOARD_DATE, M.MEM_NAME, BM.MENU_NAME
+FROM BOARD B INNER JOIN BOARD_MENU BM
+					 ON B.MENU_NO = BM.MENU_NO
+			 INNER JOIN MEMBER M
+				  	 ON B.MEM_NO = M.MEM_NO
+WHERE B.BOARD_TITLE LIKE CONCAT('%',#{srchInput},'%')
+</select>
+<select id="searchIndex" parameterType="hashmap" resultType="hashmap">
+SELECT B.BOARD_NO, BM.MENU_NO, B.BOARD_TITLE, DATE_FORMAT(B.BOARD_DATE, '%Y. %m. %d') AS BOARD_DATE, M.MEM_NAME, BM.MENU_NAME
+FROM BOARD B INNER JOIN BOARD_MENU BM
+					 ON B.MENU_NO = BM.MENU_NO
+			 INNER JOIN MEMBER M
+				  	 ON B.MEM_NO = M.MEM_NO
+WHERE B.BOARD_INDEX LIKE CONCAT('%',#{srchInput},'%')
+</select>
+<select id="search" parameterType="hashmap" resultType="hashmap">
+SELECT B.BOARD_NO, BM.MENU_NO, B.BOARD_TITLE, DATE_FORMAT(B.BOARD_DATE, '%Y. %m. %d') AS BOARD_DATE, M.MEM_NAME, BM.MENU_NAME
+FROM BOARD B INNER JOIN BOARD_MENU BM
+					 ON B.MENU_NO = BM.MENU_NO
+			 INNER JOIN MEMBER M
+				  	 ON B.MEM_NO = M.MEM_NO
+WHERE B.BOARD_TITLE LIKE CONCAT('%',#{srchInput},'%') OR B.BOARD_INDEX LIKE CONCAT('%',#{srchInput},'%')
+</select>
+<select id="selectComm" parameterType="int" resultType="hashmap">
+SELECT *
+FROM (SELECT A.COM_NO, A.BOARD_NO, A.MEM_NO, A.COM_INDEX, DATE_FORMAT(A.COM_DATE, '%Y. %m. %d') AS COM_DATE, A.MEM_NAME, @ROWNUM := @ROWNUM+1 AS RNUM
+		FROM (SELECT BC.COM_NO, BC.BOARD_NO, BC.MEM_NO, BC.COM_INDEX, BC.COM_DATE, M.MEM_NAME
+			  FROM BOARD_COMMENTS BC INNER JOIN MEMBER M
+			  							     ON BC.MEM_NO = M.MEM_NO
+			  WHERE BC.BOARD_NO = #{boardNo} AND BC.DEL_YN = 'N'
+			  ORDER BY BC.COM_DATE DESC
+			  LIMIT 18446744073709551615) A, (SELECT @ROWNUM := 0) R) A
+WHERE A.RNUM BETWEEN 1 AND 100
+</select>
+<insert id="comment" parameterType="hashmap">
+INSERT INTO BOARD_COMMENTS (BOARD_NO, MEM_NO, COM_INDEX, COM_DATE)
+VALUES (#{boardNo}, (SELECT MEM_NO FROM MEMBER WHERE MEM_ID = #{memId}), #{comIndex}, CURRENT_TIMESTAMP)
+</insert>
+<select id="mocom" parameterType="int" resultType="hashmap">
+SELECT *
+FROM BOARD_COMMENTS BC INNER JOIN MEMBER M
+                        ON BC.MEM_NO = M.MEM_NO
+WHERE BC.COM_NO = #{comNo}
+</select>
+<update id="upcom" parameterType="hashmap">
+UPDATE BOARD_COMMENTS SET COM_INDEX = #{comIndex} WHERE COM_NO = #{comNo}
+</update>
+<update id="delcom" parameterType="hashmap">
+UPDATE BOARD_COMMENTS SET DEL_YN = 'Y' WHERE COM_NO = #{comNo}
+</update>
+</mapper>

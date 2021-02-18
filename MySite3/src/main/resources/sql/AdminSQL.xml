@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin">
+<select id="select" resultType="hashmap">
+SELECT *
+FROM RECORD
+</select>
+<insert id="insert_rec" parameterType="rBean">
+INSERT INTO RECORD (REC_NAME, REC_ART, REC_DATE) 
+VALUES (#{rec_name}, #{rec_art}, STR_TO_DATE(#{rec_date},'%Y.%m.%d'))
+</insert>
+<insert id="insert_img" parameterType="hashmap">
+INSERT INTO IMAGE (IMG_URL, IMG_NAME, IMG_RENAME, REC_NO) 
+VALUES (#{imgUrl}, #{imgName}, #{imgRename}, (SELECT REC_NO FROM RECORD WHERE REC_NAME = #{rec_name}))
+</insert>
+<insert id="insert_tra" parameterType="hashmap">
+INSERT INTO TRACK (REC_NO, TRA_NO, TRA_NAME, TRA_URL)
+VALUES ((SELECT REC_NO FROM RECORD WHERE REC_NO = #{REC_NO}), #{TRA_NO}, #{TRA_NAME}, #{TRA_URL})
+</insert>
+<select id="member" resultType="hashmap">
+SELECT *
+FROM MEMBER
+ORDER BY MEM_NO ASC
+</select>
+<update id="up_mem" parameterType="hashmap">
+UPDATE MEMBER SET MEM_ID = #{mem_id}, MEM_PW = #{mem_pw}, MEM_NAME = #{mem_name}, MEM_EMAIL = #{mem_email}, MEM_GRADE = #{mem_grade}, DEL_YN = #{del_yn}
+WHERE MEM_NO = #{mem_no}
+</update>
+</mapper>

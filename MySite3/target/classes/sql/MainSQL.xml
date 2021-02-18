@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="main">
+<select id="imgList" resultType="hashmap">
+SELECT I.IMG_RENAME, A.RNUM
+FROM (SELECT *
+		FROM (SELECT *, @ROWNUM := @ROWNUM+1 AS RNUM
+				FROM (SELECT REC_NAME, REC_DATE, REC_NO
+						FROM RECORD
+						ORDER BY REC_DATE DESC
+						LIMIT 18446744073709551615) A, (SELECT @ROWNUM := 0) R) A
+		WHERE A.RNUM BETWEEN 1 AND 6) A INNER JOIN IMAGE I
+															 ON A.REC_NO = I.REC_NO
+ORDER BY A.RNUM ASC
+</select>
+<select id="select" resultType="hashmap">
+SELECT R.REC_NO, I.IMG_URL, I.IMG_RENAME
+FROM (SELECT *, @ROWNUM := @ROWNUM+1 AS RNUM
+		FROM (SELECT CEIL(A.CNT * B.CNT) AS CNT, A.REC_NO
+				FROM (SELECT (100/COUNT(*)) AS CNT, REC_NO
+						FROM COMMENTS
+						WHERE DEL_YN = 'N'
+						GROUP BY REC_NO) A INNER JOIN (SELECT COUNT(*) AS CNT, REC_NO
+																 FROM COMMENTS
+															 	 WHERE DEL_YN = 'N' AND COM_YN = 'PITCH PERFECT'
+																 GROUP BY REC_NO) B
+															ON A.REC_NO = B.REC_NO
+				ORDER BY CNT DESC
+				LIMIT 18446744073709551615) A, (SELECT @ROWNUM := 0) AS R) R INNER JOIN IMAGE I
+																					 ON R.REC_NO = I.REC_NO
+WHERE R.RNUM BETWEEN 1 AND 6
+</select>
+<select id="search" parameterType="String" resultType="hashmap">
+SELECT R.REC_NO, I.IMG_URL, I.IMG_RENAME
+FROM RECORD AS R INNER JOIN IMAGE AS I
+                      ON R.REC_NO = I.REC_NO
+WHERE R.REC_ART LIKE CONCAT('%',#{search},'%') OR REC_NAME LIKE CONCAT('%',#{search},'%')
+
+</select>
+</mapper>

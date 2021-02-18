@@ -1,0 +1,126 @@
+html, body { margin: 0 auto; padding: 0; background-color: #ffffff; }
+    header { width: 100%; height: 60px; text-align: center; }
+    header h1 { width: 200px; margin-top: 0; margin-bottom: 0; margin-left: auto; margin-right: auto; padding-top: 8px; }
+    .menu {
+        width: 900px;
+        height: 50px;
+        background-color: #ffdddd;
+        left: 50%;
+        margin: 0 auto;
+    }
+    .menu ul {
+        padding: 10px 0 0 0;
+        list-style: none;
+        
+    }
+    .menu ul li {
+        margin-top: 5px;
+        float: left;
+        width: 20%;
+        height: 30px;
+        font-weight: bold;
+    }
+    .menu ul li a {
+        display: block;
+    }
+    .menu ul li a:hover {
+        cursor: pointer;
+        color: #bebebe;
+    }
+    .logout { text-decoration :underline; }
+    a { text-decoration: none; color: black; }
+    .slide {
+    	width: 600px;
+    	height: 600px;
+    	margin: 70px auto 0 auto;
+        overflow: hidden;
+    }
+    .slide img {
+        width: 600px;
+        height: 600px;
+    }
+    .big_wrap {
+        width: 100%;
+    }
+    .big {
+        display: block;
+        width: 900px;
+        top: 100px;
+        margin: 0 auto;
+        padding-left: 100px;
+        list-style: none;
+    }
+
+    .big li {
+    cursor: pointer;
+    }
+    
+    .little {
+        float: left;
+        margin-left: 0;
+        margin-right: 100px;
+        margin-top: 20px;
+        width: 200px;
+        height: 200px;
+        position: relative;
+    }
+    
+    .little img {
+    	width: 200px;
+    	height: 200px;
+    	cursor: pointer;
+    }
+    
+    #little2 {
+        border: 1px solid #bebebe;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        text-align: center;
+        line-height: 200px;
+        font-size: 7em;
+        opacity: 0;
+        color: #ffdddd;
+    }
+    #little2:hover{        
+        opacity: 1;
+    }
+    .find_wrap {
+    	clear:both;
+    	width: 100%;
+    	height: 30px;
+        padding-top: 30px;
+    }
+    .find_wrap form {
+        width: 312px;
+        margin: 0 auto;
+    }
+    .search {
+        float: left;
+        width: 200px;
+        padding: 10px;
+        top: 600px;
+        text-align: center;
+        border-radius: 5px;
+        border: 1px solid #bebebe;
+        margin-right: 10px;
+    }
+    
+    .find {
+        width: 80px;
+        top: 600px;
+        text-decoration: none;
+        border: none;
+        border-radius: 5px;
+        background-color: #bebebe;
+        cursor: pointer;
+        padding: 6px;
+    }
+    .find img{ width: 25px; height: 25px; }
+    footer {
+        clear: both;
+        width: 100%;
+        height: 80px;
+    }

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="detail">
+<select id="select" parameterType="int" resultType="hashmap">
+	SELECT R.REC_NO, R.REC_NAME, R.REC_ART, DATE_FORMAT(R.REC_DATE, '%Y년 %m월  %d일') AS REC_DATE, T.TRA_NO, T.TRA_NAME, T.TRA_URL, I.IMG_RENAME
+	FROM RECORD R LEFT OUTER JOIN TRACK T
+							   ON R.REC_NO = T.REC_NO
+				  LEFT OUTER JOIN IMAGE I
+					  		   ON R.REC_NO = I.REC_NO
+	WHERE R.REC_NO = #{REC_NO}
+	ORDER BY T.TRA_NO ASC
+</select>
+<select id="cnt" parameterType="int" resultType="hashmap">
+SELECT ROUND(COUNT(*) * (SELECT 100/COUNT(*) AS CNT
+						 FROM COMMENTS
+					  	 WHERE REC_NO = #{REC_NO} AND DEL_YN = 'N')) AS CNT
+FROM COMMENTS
+WHERE REC_NO = #{REC_NO} AND DEL_YN = 'N' AND COM_YN = 'PITCH PERFECT'
+</select>
+<select id="comments" parameterType="int" resultType="hashmap">
+	SELECT *
+	FROM (SELECT C.COM_NO, C.COM_YN, M.MEM_NAME, C.COM_INDEX, DATE_FORMAT(C.COM_DATE, '%Y년 %m월  %d일') AS COM_DATE, @ROWNUM := @ROWNUM+1 AS RNUM
+			FROM RECORD R INNER JOIN COMMENTS C
+			                      ON R.REC_NO = C.REC_NO
+			                     AND C.DEL_YN = 'N'
+			              INNER JOIN MEMBER M
+			                      ON C.MEM_NO = M.MEM_NO,
+							  (SELECT @ROWNUM := 0) R
+			WHERE R.REC_NO = #{REC_NO}
+			ORDER BY C.COM_DATE DESC) A
+	WHERE A.RNUM BETWEEN 1 AND 5
+</select>
+<select id="pagecnt" parameterType="int" resultType="hashmap">
+SELECT CEIL(COUNT(*)/5) AS PAGECNT
+FROM  COMMENTS C INNER JOIN RECORD R
+                         ON C.REC_NO = R.REC_NO
+                        AND R.REC_NO = #{REC_NO}
+WHERE C.DEL_YN = 'N'
+</select>
+<select id="page" parameterType="hashmap" resultType="hashmap">
+SELECT *
+FROM (SELECT C.COM_NO, C.COM_YN, M.MEM_NAME, C.COM_INDEX, DATE_FORMAT(C.COM_DATE, '%Y년 %m월  %d일') AS COM_DATE, @ROWNUM := @ROWNUM+1 AS RNUM
+		FROM RECORD R INNER JOIN COMMENTS C
+		                      ON R.REC_NO = C.REC_NO
+		                     AND C.DEL_YN = 'N'
+		              INNER JOIN MEMBER M
+		                      ON C.MEM_NO = M.MEM_NO,
+						  (SELECT @ROWNUM := 0) R
+		WHERE R.REC_NO = #{REC_NO}
+		ORDER BY C.COM_DATE DESC) A
+WHERE RNUM BETWEEN (5*#{pagecnt}) - 4 AND 5*#{pagecnt}
+</select>
+<select id="mocom" parameterType="int" resultType="hashmap">
+SELECT C.COM_NO, M.MEM_NO, C.REC_NO, C.COM_INDEX, M.MEM_ID, R.REC_NAME, R.REC_ART, M.MEM_NAME
+FROM COMMENTS C INNER JOIN MEMBER M
+                        ON C.MEM_NO = M.MEM_NO
+                INNER JOIN RECORD R
+                        ON C.REC_NO = R.REC_NO
+WHERE C.COM_NO = #{COM_NO}
+</select>
+<update id="upcom" parameterType="hashmap">
+UPDATE COMMENTS SET COM_INDEX = #{comIndex}, COM_YN = #{comYn} WHERE COM_NO = #{comNo}
+</update>
+<select id="overlapCom" parameterType="hashmap" resultType="hashmap">
+SELECT *
+FROM COMMENTS
+WHERE MEM_NO = (SELECT MEM_NO
+					 FROM MEMBER
+					 WHERE MEM_ID = #{MEM_ID}) AND REC_NO = #{REC_NO} AND DEL_YN = 'N'
+</select>
+<insert id="insert" parameterType="hashmap">
+INSERT INTO COMMENTS (MEM_NO, REC_NO, COM_INDEX, COM_YN, DEL_YN, COM_DATE) 
+VALUES ((SELECT MEM_NO FROM MEMBER WHERE MEM_ID = BINARY(#{MEM_ID})), #{REC_NO}, #{COM_INDEX}, #{COM_YN}, 'N', CURRENT_TIMESTAMP);
+</insert>
+<update id="delcom" parameterType="int">
+UPDATE COMMENTS SET DEL_YN = 'Y' WHERE COM_NO = #{comNo}
+</update>
+</mapper>

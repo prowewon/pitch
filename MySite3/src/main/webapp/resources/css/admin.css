@@ -1,0 +1,101 @@
+html, body { margin: 0 auto; padding: 0; background-color: #ffffff; min-width: 1200px; }
+ul {
+    margin: 0;
+    padding: 0;
+}
+button,select, option {
+	cursor: pointer;
+}
+header { width: 100%; height: 60px; background-color: #ffdddd; text-align: center; }
+header h1 { width: 200px; margin: 0 auto; padding-top: 8px; } 
+.text { margin-top: 10px; width: 300px; float: right; }
+.text a { margin-left: 10px; color: black; font-size: 17px; font-weight: bold; }
+.text a:HOVER { border-bottom: 1px solid black;}
+a { text-decoration: none; color: black; cursor: pointer;}
+.btn {
+    width: 700px;
+    height: 45px;
+    left: 50%;
+    margin: 40px auto 0 auto;
+}
+.btn button {
+    width: 350px;
+    height: 45px;
+    border: 0;
+}
+
+.album {
+    background-color: #ffdddd;
+    color: #fff;
+    float: left;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+.user {
+    background-color: #f8f8f8;
+    color: #000;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+.box {
+    width: 900px;
+    height: 520px;
+    margin: 50px auto 0 auto;
+    display: block;
+}
+.record {
+    display: inline-block;
+    width: 420px;
+    height: 500px;
+    text-align: center;
+    list-style: none;
+    float: left;
+    border: 1px solid #bebebe;
+}
+.track {
+    display: inline-block;
+    width: 420px;
+    height: 500px;
+    text-align: center;
+    list-style: none;
+    float: right;
+    border: 1px solid #bebebe;
+}
+.name { width: 400px; height: 30px; margin-left: 10px;} 
+strong { float: left; }
+.value { width: 400px; height: 50px; margin-left: 10px;}
+.box input { width: 400px; height: 40px; border-radius: 4px; border: 1px solid #bebebe; }
+.check { width: 180px; height: 40px; }
+.signup { margin-top: 30px; }
+a { color: black; text-decoration:none; }
+
+.box2 {
+    width: 1200px;
+    height: 520px;
+    margin: 50px auto 0 auto;
+    display: none;
+}
+.box2 table{
+    width: 1200px;
+    text-align: center;
+    border-collapse: collapse;
+    margin-bottom: 50px;
+}
+.box2 table tr {
+    height: 50px;
+}
+.box2 table th {
+    background-color: #dddddd;
+}
+.box2 table th, td {
+    border: 1px solid #dddddd;
+}
+.submit {
+    background-color: #dddddd;
+    border: 0;
+}
+.box2 table input {
+	height: 20px;
+	font-size: 13px;
+}

@@ -1,0 +1,207 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    min-width: 1200px;
+}
+button {
+    cursor: pointer;
+}
+header { width: 100%; text-align: center; }
+a {text-decoration: none; color: black;}
+header h1 { width: 200px; margin: 0 auto; padding-top: 8px; }
+.menu {
+    width: 900px;
+    height: 50px;
+    background-color: #ffdddd;
+    left: 50%;
+    margin: 0 auto;
+}
+.menu ul {
+    padding: 10px 0 0 0;
+    list-style: none;
+}
+.menu ul li {
+    margin-top: 5px;
+    float: left;
+    width: 20%;
+    height: 30px;
+    font-weight: bold;
+}
+.menu ul li a {
+    display: block;
+
+}
+.menu ul li a:hover {
+    cursor: pointer;
+    color: #bebebe;
+}
+
+.wrapper {
+    width: 800px;
+/*     height: 800px; */
+    border: 1px solid #bebebe;
+    left: 50%;
+    margin: 30px auto 0 auto;
+}
+
+.wrapper .title {
+    width: 700px;
+    margin: 0 auto;
+    height: 100px;
+    border-bottom: 1px solid #bebebe;
+    font-size: 25px;
+    padding-top: 10px;
+    font-weight: 500;
+}
+
+.wrapper .index {
+    width: 700px;
+/*     height: 650px; */
+    margin: 50px auto 20px auto;
+    padding: 5px 0 0 10px;
+/*     overflow-y: scroll; */
+}
+
+.comment_wrap {
+    position: relative;
+    width: 100%;
+    top: 30px;
+    clear: both;
+}
+.comment {
+    left: 50%;
+    margin: 0 auto;
+    width: 800px;
+    clear: both;
+    border: 1px solid #bebebe;
+}
+.comment_input {
+    left: 50%;
+    margin: 20px auto 0 auto;
+    width: 800px;
+    height: 80px;
+    border-radius: 3px;
+}
+.comment_input textarea {
+    width: 600px;
+    height: 70px;
+    border: 1px solid #bebebe;
+    border-radius: 3px;
+    margin: 0 0 0 15px;
+    padding: 0;
+    resize: none;
+}
+
+.comment_input button {
+    float: right;
+    width: 160px;
+    height: 71px;
+    margin: 0 15px 0 0;
+    padding: 0;
+    border: 0;
+    border-radius: 3px;text-align: center;
+    font-size: 15px;
+}
+
+.comment_list {
+    width: 800px;
+    left: 50%;
+    margin: 20px auto 10px 10px;
+    padding : 0;
+	list-style: none;
+}
+.comment_list li {
+    width: 780px;
+    height: 110px;
+    border: 1px solid #bebebe;
+    margin: 5px 0 0 0;
+    padding: 0;
+}
+
+.comment_list .user_inform {
+    height: 25px;
+    border-bottom: 1px solid #bebebe;
+}
+
+.comment_list .user_inform p {
+    margin: 1px 5px 0 5px;
+}
+
+.comment_list .user_inform .COM_Y{
+    color: dodgerblue;
+}
+.comment_list .user_inform .COM_N{
+    color: crimson;
+}
+
+.comment_list .user_inform a {
+    float: right;
+    cursor: pointer;
+    margin: 2px 5px 0 0;
+}
+
+.comment_list .user_inform a:hover {
+    border-bottom: 1px solid #444;
+}
+
+.comment_list .comment_index {
+	font-size: 13px;
+}
+
+.comment .page_area {
+    margin-top: 10px;
+    width: 1000px;
+    height: 30px;
+    text-align: center;
+}
+
+.comment .page_area .page_num {
+    margin: 0 auto;
+}
+
+.comment .page_area .page_num td {
+	cursor: pointer;
+}
+
+footer {
+    margin-top: 50px;
+    width: 100%;
+    height: 50px;
+    bottom: 0;
+}
+
+/*게시글 버튼영역*/
+.btn_area {
+    width: 700px;
+    /*height: 20px;*/
+    margin: 10px auto 0 auto;
+    background-color: aliceblue;
+}
+
+.btn_area ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.btn_area ul .li1 {
+    float: left;
+    margin-right: 20px;
+    font-size: 12px;
+    color: #bebebe;
+}
+
+.btn_area button {
+    float: right;
+    background-color: #dedede;
+    border: 0;
+    padding: 0;
+    margin: 0 5px 0 0;
+    width: 50px;
+    height: 25px;
+}
+
+/* 수정 댓글 박스 */
+#mocom_box {
+    display: none;
+}

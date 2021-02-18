@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Security URL 주소 설정 -->
+	<security:http auto-config="true" use-expressions="true">
+		<security:access-denied-handler error-page="/Error"/>
+		<security:csrf disabled="true"/>
+		<security:form-login
+			login-page="/Login"
+			login-processing-url="/Login/login"
+			username-parameter="id"
+			password-parameter="pwd"
+			authentication-failure-url="/Login?error"
+			default-target-url="/Main/main"
+		/>
+		<security:logout
+			logout-url="/security_logout"
+			logout-success-url="/Login"
+			delete-cookies="JSESSIONID"
+		/>
+		<!-- 제일 위에 있는게 가장 강력하므로 예외인 화면들은 위로 넣어준다. -->
+		<!-- <security:intercept-url pattern="/" access="true"/> -->
+		<security:intercept-url pattern="/Loign" access="true"/>
+		<security:intercept-url pattern="/Main/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')"/>
+		<security:intercept-url pattern="/Admin/**" access="hasRole('ROLE_ADMIN')"/>
+		<security:intercept-url pattern="/Board/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')"/>
+		<!-- hasRole('ROLE_ADMIN') 다수개의 권한이 들어갈 수 있다. 예 : hasRole('ROLE_ADMIN', 'ADMIN_USER') -->
+	</security:http>
+	
+	<!-- Security 사용자 권한 확인 -->
+	<security:authentication-manager>
+		<security:authentication-provider>
+			<!-- <security:user-service>
+				<security:user name="admin" password="1234" authorities="ROLE_ADMIN"/>
+			</security:user-service> -->
+			<security:jdbc-user-service data-source-ref="dataSource"
+										users-by-username-query="SELECT MEM_ID AS username, MEM_PW AS password, ENABLED as enabled, MEM_NAME as memname
+																 FROM MEMBER
+																 WHERE MEM_ID = ? AND DEL_YN = 'N'"
+										authorities-by-username-query="select MEM_ID as username, MEM_GRADE as authority 
+																	  from MEMBER 
+																	  where MEM_ID = ? AND DEL_YN = 'N'"
+																	   />
+		</security:authentication-provider>
+	</security:authentication-manager>
+</beans>
+ 

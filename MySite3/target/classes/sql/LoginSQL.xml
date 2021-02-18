@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="login">
+	<select id="select" parameterType="hashmap" resultType="hashmap">
+		SELECT *
+		FROM MEMBER
+		WHERE MEM_ID = BINARY(#{id}) AND MEM_PW = BINARY(#{pwd})
+	</select>
+	<select id="selectId" parameterType="String" resultType="hashmap">
+		SELECT *
+		FROM MEMBER 
+		WHERE MEM_ID = #{id}
+	</select>
+	<insert id="insert" parameterType="hashmap">
+		INSERT INTO MEMBER (MEM_ID, MEM_PW, MEM_NAME, MEM_GRADE, MEM_EMAIL)
+		VALUES (#{id}, #{pwd}, #{id}, "ROLE_USER", #{email})
+	</insert>
+</mapper>
